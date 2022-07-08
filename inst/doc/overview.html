@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+<meta name="date" content="2022-07-06" />
+
+<title>Overview of HurreconR</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Overview of HurreconR</h1>
+<h4 class="date">6 July 2022</h4>
+
+
+
+<div id="hurrecon-model" class="section level2">
+<h2>HURRECON Model</h2>
+<p>The HURRECON model estimates wind speed, wind direction, enhanced
+Fujita scale wind damage, and duration of EF0 to EF5 winds as a function
+of hurricane location and maximum sustained wind speed. Results may be
+generated for a single site or an entire region. Hurricane track and
+intensity data may be imported directly from the US National Hurricane
+Center’s HURDAT2 database.</p>
+<p>The model is an updated version of the original HURRECON model
+written in Borland Pascal for use with Idrisi (see below for
+details).</p>
+</div>
+<div id="getting-started" class="section level2">
+<h2>Getting Started</h2>
+<p>Here are the basic steps for using the model. Please see below for
+more details.</p>
+<ol style="list-style-type: decimal">
+<li>Install and load the R package for the model (HurreconR).</li>
+<li>Create a directory for a set of related model runs with
+subdirectories for input and output files (as described below).</li>
+<li>Create a site file (<i>sites.csv</i>) with geographic coordinates
+for one or more study sites.</li>
+<li>Download or create geographic and political boundary shapefiles for
+the desired geographic region. The coordinate system should be
+latitude/longitude (degrees). Rename these files so the first name of
+each file is “boundaries”.</li>
+<li>Create a land-water file (<i>land_water.tif</i>) for the
+region.</li>
+<li>Create a parameter file (<i>parameters.csv</i>) with parameters for
+all hurricanes and (optionally) for particular hurricanes.</li>
+<li>Create an input hurricane track file (<i>input_tracks.csv</i>) for
+the geographic region. If desired, this file can be created directly
+from HURDAT2.</li>
+<li>Run the model to create site and regional estimates. Use the plot
+functions to view model results.</li>
+</ol>
+</div>
+<div id="details" class="section level2">
+<h2>Details</h2>
+<p>All user functions begin with “hurrecon”. Input CSV files have a
+single header line that contains variable names (see details below).
+Model results are generated for two cover types: water and land.
+Datetimes are assumed to be UTC (GMT). Raster files are in GeoTiff
+format. Geographic coordinates are assumed to be latitude/longitude
+(degrees). The following measurement units are used throughout:</p>
+<pre><code>bearing, direction - degrees
+distance - kilometers
+speed - meters/second
+time - minutes or hours</code></pre>
+<p>The user specifies a path (<i>hur_path</i>) for a given set of model
+runs. Input and output files are stored on the following subdirectories
+of this path:</p>
+<pre><code>hur_path/input
+hur_path/region
+hur_path/region-all
+hur_path/region-dt
+hur_path/site
+hur_path/site-all
+hur_path/vector</code></pre>
+<p>The <i>input</i> subdirectory contains input files. The <i>site</i>
+and <i>region</i> subdirectories contain site and regional output files,
+respectively. Shapefiles that contain geographic and political
+boundaries for viewing regional results are stored on the <i>vector</i>
+subdirectory.</p>
+<p>The following input files are required:</p>
+<pre><code>sites.csv
+boundaries.*
+land_water.tif
+parameters.csv
+input_tracks.csv</code></pre>
+<p>All input files (except boundary files) are located on the
+<i>input</i> subdirectory.</p>
+<p>The sites file contains the name, location, and cover type (water =
+1, land = 2) of each study site. Variables: <i>site_name</i>,
+<i>latitude</i>, <i>longitude</i>, <i>cover_type</i>.</p>
+<p>The boundary files are vector shapefiles that are used for creating
+maps of regional results. These files are located on the <i>vector</i>
+subdirectory.</p>
+<p>The land-water file is a raster GeoTiff file that specifies the cover
+type (water = 1, land = 2) for each cell across a region. The geographic
+coordinates and the number of rows and columns of the land-water file
+are used to set the geographic window and spatial resolution for
+regional modeling.</p>
+<p>The parameters file contains model parameters (radius of maximum
+winds and scaling parameter) for all hurricanes and (optionally) for
+individual hurricanes. Variables: <i>hur_id</i>, <i>rmw</i>,
+<i>s_par</i>. This file must contain at least one record (<i>hur_id</i>
+= ALL) that specifies the default values of <i>rmw</i> and <i>s_par</i>.
+Values typically range from 20 to 100 km for <i>rmw</i> and from 1.2 to
+1.5 for <i>s_par</i>, depending on the region.</p>
+<p>The input tracks file contains location and maximum wind speed for
+each position of each hurricane for a given set of model runs.
+Variables: <i>hur_id</i>, <i>name</i>, <i>date_time</i>, <i>jd</i>,
+<i>status</i>, <i>latitude</i>, <i>longitude</i>, <i>wind_max</i>.</p>
+<p>The input tracks file may be created directly from HURDAT2. Use the
+<i>hurrecon_reformat_hurdat2</i> function to reformat a HUTDAT2 file as
+<i>hurdat2_tracks.csv</i>, rename this file to <i>input_tracks.csv</i>,
+and copy this file to the <i>input</i> subdirectory.</p>
+<p>The <i>hurrecon_extract_tracks</i> function is used to extract the
+data needed for a particular set of model runs. This function uses the
+input tracks file and the land-water file to create input files
+(<i>ids.csv</i>, <i>tracks.csv</i>, <i>tracks-all.csv</i>) required for
+the <i>hurrecon_model</i> functions.</p>
+<p>Examples of input files may be found on the <i>inst/input</i>
+subdirectory.</p>
+<p>To run the model, create the above directories, copy the input files
+to their respective subdirectories, and use the <i>library</i> function
+to load HurreconR.</p>
+</div>
+<div id="model-functions" class="section level2">
+<h2>Model Functions</h2>
+<pre><code>hurrecon_reformat_hurdat2
+
+hurrecon_set_path
+hurrecon_get_path
+
+hurrecon_create_land_water
+hurrecon_extract_tracks
+
+hurrecon_model_site
+hurrecon_model_site_all
+hurrecon_model_region
+hurrecon_model_region_dt
+hurrecon_model_region_all
+
+hurrecon_summarize_land_water
+hurrecon_summarize_tracks
+hurrecon_summarize_site
+
+hurrecon_plot_site
+hurrecon_plot_site_all
+hurrecon_plot_tracks
+hurrecon_plot_region
+hurrecon_plot_region_dt
+hurrecon_plot_region_all</code></pre>
+<p>The <i>hurrecon_reformat_hurdat2</i> function reformats data from
+HURDAT2 for use with HURRECON. This is normally a one-time operation for
+a given version of HURDAT2. Hurricane IDs in HURDAT2 are reformatted to
+facilitate sorting by year (e.g. AL031935 becomes AL1935-03).</p>
+<p>The <i>hurrecon_set_path</i> function sets the path for the current
+set of model runs. The <i>hurrecon_get_path</i> function returns the
+current path. Use <i>hurrecon_set_path</i> before using other
+functions.</p>
+<p>The <i>hurrecon_create_land_water</i> function creates a land-water
+raster file in GeoTiff format using the specified minimum &amp; maximum
+latitude &amp; longitude, the number of rows &amp; columns, and vector
+boundary files in shapefile format used to set the cover type of each
+cell. The land-water file is used by other functions to get the spatial
+parameters required for regional modeling. The
+<i>hurrecon_extract_tracks</i> function extracts data from an input
+tracks file (which may be derived from HURDAT2) for use with a
+particular land-water file. Optional parameters may be used to broaden
+the geographic area or adjust the minimum hurricane intensity when
+selecting hurricane tracks.</p>
+<p>The <i>hurrecon_model</i> functions generate output for a single
+hurricane and a single site (all datetimes), all hurricanes for a single
+site (peak values), a single hurricane for a specified geographic region
+(peak values or specified datetime), and all hurricanes for a specified
+geographic region (peak values). If save is TRUE (default), results are
+written to the <i>site</i>, <i>site-all</i>, <i>region</i>,
+<i>region-all</i>, or <i>region-dt</i> subdirectory as CSV or GeoTiff
+files. The default time step for site results is 1 minute. The default
+time step for regional results is calculated as the time required to
+traverse one cell in the vertical direction at 20 meters per second,
+rounded to one of these values: 1, 2, 3, 5, 10, 15, 30, or 60
+minutes.</p>
+<p>The <i>hurrecon_summarize_land_water</i> function displays
+information about the current land-water file. The
+<i>hurrecon_summarize_tracks</i> function displays information about the
+current track files. The <i>hurrecon_summarize_site</i> function
+displays peak values for a single hurricane and a single site.</p>
+<p>The <i>hurrecon_plot_site</i> functions create time-series and
+scatter plots for a single hurricane and time-series plots for all
+hurricanes for a given site. The <i>hurrecon_plot_tracks</i> function
+creates a map of the land-water file with selected hurricane tracks. The
+<i>hurrecon_plot_region</i> functions create maps of regional results
+for a single hurricane or for all hurricanes.</p>
+</div>
+<div id="examples" class="section level2">
+<h2>Examples</h2>
+<p>Sample commands for the 1935 Florida Keys hurricane and Miami FL:</p>
+<pre><code>hurrecon_reformat_hurdat2(hurdat2_file=&quot;hurdat2-1851-2021-041922.txt&quot;)
+[copy hurdat2_tracks.csv to input_tracks.csv on input subdirectory]
+
+hurrecon_set_path(&quot;c:/hurrecon/east_20km&quot;)
+hurrecon_get_path()
+
+hurrecon_create_land_water(nrows=150, ncols=180, xmn=-100, xmx=-59, ymn=23, ymx=50)
+hurrecon_extract_tracks(wind_min=70)
+
+hurrecon_model_site(&quot;AL1935-03&quot;, &quot;Miami FL&quot;)
+hurrecon_model_site_all(&quot;Miami FL&quot;)
+hurrecon_model_region(&quot;AL1935-03&quot;)
+hurrecon_model_region_dt(&quot;AL1935-03&quot;, &quot;1935-09-03T12:00&quot;)
+hurrecon_model_region_all()
+
+hurrecon_summarize_land_water()
+hurrecon_summarize_tracks()
+hurrecon_summarize_site(&quot;AL1935-03&quot;, &quot;Miami FL&quot;)
+
+hurrecon_plot_site(&quot;AL1935-03&quot;, &quot;Miami FL&quot;)
+hurrecon_plot_site_all(&quot;Miami FL&quot;)
+hurrecon_plot_tracks()
+hurrecon_plot_region(&quot;AL1935-03&quot;)
+hurrecon_plot_region_dt(&quot;AL1935-03&quot;, &quot;1935-09-03T12:00&quot;)
+hurrecon_plot_region_all()</code></pre>
+</div>
+<div id="model-equations" class="section level2">
+<h2>Model Equations</h2>
+<p>The sustained wind speed (Vs) at any point P in the northern
+hemisphere is estimated as:</p>
+<pre><code>[1] Vs = F[Vm - S(1 - sin T)Vh/2] * Sqrt[(Rm/R)^B * exp(1 - (Rm/R)^B)]
+
+where:
+
+F = scaling parameter for the effects of friction (water = 1.0, land = 0.8)
+Vm = maximum sustained wind speed over water anywhere in hurricane
+S = scaling parameter for asymmetry due to forward motion of hurricane (1.0)
+T = clockwise angle between forward motion of hurricane and radial line to P
+Vh = forward speed of hurricane
+Rm = radius of maximum winds
+R = radial distance from hurricane center to point P
+B = scaling parameter controlling shape of wind profile curve</code></pre>
+<p>The peak wind gust speed (Vg) at point P is estimated as:</p>
+<pre><code>[2] Vg = G * Vs
+
+where:
+
+G = gust factor (water = 1.2, land = 1.5)</code></pre>
+<p>The wind direction (D) in degrees at point P is estimated as:</p>
+<pre><code>[3] D = Az - 90 - I
+
+where:
+
+Az = azimuth from point P to hurricane center
+I = cross-isobar inflow angle (water = 20 degrees, land = 40 degrees)</code></pre>
+<p>In the southern hemisphere:</p>
+<pre><code>T = counterclockwise angle between forward motion of hurricane and radial line to P
+D = Az + 90 + I</code></pre>
+<p>For more details, see publications below.</p>
+</div>
+<div id="history" class="section level2">
+<h2>History</h2>
+<p>The original HURRECON model was written in Borland Pascal and
+depended on Idrisi for spatial visualization. The model was used in
+published studies of the ecological impacts of historical hurricanes in
+New England and Puerto Rico:</p>
+<ul>
+<li><p>Boose, E. R., Chamberlin, K. E., Foster, D. R. 2001. Landscape
+and regional impacts of hurricanes in New England. Ecological Monographs
+71: 27-48.
+doi.org/10.1890/0012-9615(2001)071[0027:LARIOH]2.0.CO;2.</p></li>
+<li><p>Boose, E. R., Serrano, M. I., Foster, D. R. 2004. Landscape and
+regional impacts of hurricanes in Puerto Rico. Ecological Monographs 74:
+335-352. doi.org/10.1890/02-4057.</p></li>
+</ul>
+<p>New features in the updated version of HURRECON include support for:
+(1) estimating wind damage on the enhanced Fujita scale, (2) importing
+hurricane track and intensity data directly from HURDAT2, (3) creating a
+land-water file with user-selected geographic coordinates and spatial
+resolution, and (4) creating plots of site and regional results.</p>
+<p>The model equations for estimating wind speed and direction,
+including parameter values for inflow angle, friction factor, and wind
+gust factor (over land and water), are unchanged from the original
+HURRECON model.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
