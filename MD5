@@ -1,8 +1,8 @@
-468ee9ee44b7cfe25bdc240c1688e1ae *DESCRIPTION
+b2894a073f12de57e066ed763383a660 *DESCRIPTION
 2ebcaef8aadd6fadefca36e6e197d15f *NAMESPACE
 a4839d198bb97451ddec8579b4406ed7 *R/hurrecon.R
 1a7a5b2ec7f1c31b435865eb320e9b04 *README.md
-b085476f6d475c05de973fa6095bfc96 *build/vignette.rds
+7ae57cd634c4d2ae212f8559d334d9bd *build/vignette.rds
 07768f37bf69107eb2d5e82534f18777 *inst/doc/overview.Rmd
 c41c2da2ff091cefe5dd5abffa37c791 *inst/doc/overview.html
 358e7bb714de28be8f173d8e74cc9ef4 *inst/input/ids.csv
@@ -11,13 +11,13 @@ b40b24802bf121e6c3b536a06a7afaab *inst/input/parameters.csv
 14309acc8a608556780a15a19d5bd20c *inst/input/sites.csv
 2101e46eda3cd720532899f0c85c967b *inst/input/tracks.csv
 e27a56fa81850855ad8a08122139396a *inst/region/AL1935-03.tif
-b58cfdb2cef3dfa61e2fa81e1667d8bb *inst/region/land_water_summary.expected
 3bc8252cd3d7679e816262651cc64b91 *inst/site/AL1935-03_Miami_FL.csv
-c7b0623ff4b11e6e57735827a43552c3 *inst/site/site_summary.expected
 a56681c0c2bdb4d622add4cd7bc1bf62 *man/modeling.Rd
 24610db88c08585ac3c3217e07d3ad62 *man/plotting.Rd
 77f8f02f01c3c959a0f552195773d35a *man/summarizing.Rd
 0beaf9faadc0fc1ec82fd692c1e32f0b *man/utility.Rd
 55059899eda1e983e18c2cdfe2a5c76d *tests/testthat.R
-fcd303c3b5100d6db16366edb4c7cb10 *tests/testthat/test_HurreconR.R
+c7c663b2ab26cb58e25ac3dce08c4190 *tests/testthat/_snaps/HurreconR.md
+1c67889e8f5f388ddf506e5fdc05e1f6 *tests/testthat/_snaps/HurreconR/hurrecon_model_region
+5d23334bfd026ccff028946041e58157 *tests/testthat/test_HurreconR.R
 07768f37bf69107eb2d5e82534f18777 *vignettes/overview.Rmd
